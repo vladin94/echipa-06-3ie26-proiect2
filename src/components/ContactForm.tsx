@@ -12,7 +12,6 @@ export default function ContactForm() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    // Frontend-only — simulate submission
     await new Promise(r => setTimeout(r, 800));
     setSubmitted(true);
     setSubmitting(false);
@@ -21,13 +20,16 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
-        <CheckCircle className="w-12 h-12 text-amber-700 dark:text-amber-500" />
-        <h3 className="font-display text-2xl font-bold text-stone-900 dark:text-stone-100">Message sent</h3>
-        <p className="text-stone-500 dark:text-stone-400 font-body max-w-sm">
-          Thank you for reaching out. We will respond within two business days.
+        <CheckCircle className="w-12 h-12" style={{ color: 'var(--color-primary)' }} />
+        <h3 className="font-display text-2xl font-bold" style={{ color: 'var(--color-text)' }}>Mesaj trimis</h3>
+        <p className="font-body max-w-sm" style={{ color: 'var(--color-muted)' }}>
+          Mulțumim că ne-ai contactat. Vom răspunde în termen de două zile lucrătoare.
         </p>
-        <button onClick={() => { setSubmitted(false); setForm({ name: '', email: '', subject: '', message: '' }); }} className="btn-outline mt-2">
-          Send another message
+        <button
+          onClick={() => { setSubmitted(false); setForm({ name: '', email: '', subject: '', message: '' }); }}
+          className="btn-outline mt-2"
+        >
+          Trimite alt mesaj
         </button>
       </div>
     );
@@ -37,35 +39,35 @@ export default function ContactForm() {
     <form onSubmit={submit} className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label className="label" htmlFor="name">Full Name</label>
-          <input id="name" name="name" type="text" required value={form.name} onChange={handle} className="input-field" placeholder="Your name" />
+          <label className="label" htmlFor="name">Nume complet</label>
+          <input id="name" name="name" type="text" required value={form.name} onChange={handle} className="input-field" placeholder="Numele tău" />
         </div>
         <div>
-          <label className="label" htmlFor="email">Email Address</label>
-          <input id="email" name="email" type="email" required value={form.email} onChange={handle} className="input-field" placeholder="you@example.com" />
+          <label className="label" htmlFor="email">Adresă de email</label>
+          <input id="email" name="email" type="email" required value={form.email} onChange={handle} className="input-field" placeholder="tu@exemplu.com" />
         </div>
       </div>
       <div>
-        <label className="label" htmlFor="subject">Subject</label>
+        <label className="label" htmlFor="subject">Subiect</label>
         <select id="subject" name="subject" value={form.subject} onChange={handle} className="input-field">
-          <option value="">Select a subject</option>
-          <option value="general">General Inquiry</option>
-          <option value="collaboration">Collaboration</option>
+          <option value="">Selectează un subiect</option>
+          <option value="general">Întrebare generală</option>
+          <option value="collaboration">Colaborare</option>
           <option value="editorial">Editorial</option>
           <option value="feedback">Feedback</option>
         </select>
       </div>
       <div>
-        <label className="label" htmlFor="message">Message</label>
+        <label className="label" htmlFor="message">Mesaj</label>
         <textarea
           id="message" name="message" rows={6} required
           value={form.message} onChange={handle}
           className="input-field resize-none"
-          placeholder="Tell us about your inquiry..."
+          placeholder="Spune-ne despre solicitarea ta..."
         />
       </div>
       <button type="submit" disabled={submitting} className="btn-primary disabled:opacity-60 disabled:cursor-not-allowed">
-        {submitting ? 'Sending...' : <><Send size={14} /> Send Message</>}
+        {submitting ? 'Se trimite...' : <><Send size={14} /> Trimite mesajul</>}
       </button>
     </form>
   );

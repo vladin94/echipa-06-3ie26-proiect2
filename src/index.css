@@ -2,13 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Sakura theme CSS variables ───────────────────────────────── */
+:root {
+  --color-primary:     #de1f56;
+  --color-primary-dk:  #f04070;
+  --color-accent:      #dd7f33;
+  --color-accent-dk:   #e59d56;
+  --color-bg:          #fdf8f2;
+  --color-bg-dk:       #1a0d11;
+  --color-surface:     #ffffff;
+  --color-surface-dk:  #2a1420;
+  --color-text:        #3c1a25;
+  --color-text-dk:     #f9e8ef;
+  --color-muted:       #7d4456;
+  --color-muted-dk:    #c49aab;
+  --color-border:      #f5d4df;
+  --color-border-dk:   #4e2535;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-white dark:bg-stone-950 text-stone-900 dark:text-stone-50 font-body antialiased;
+    @apply font-body antialiased;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .dark body {
+    background-color: var(--color-bg-dk);
+    color: var(--color-text-dk);
+  }
+
+  .dark {
+    background-color: var(--color-bg-dk);
+    color: var(--color-text-dk);
   }
 }
 
@@ -18,7 +48,17 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 bg-amber-700 hover:bg-amber-800 dark:bg-amber-600 dark:hover:bg-amber-700 text-white rounded-none font-body font-medium text-sm tracking-wide transition-colors duration-200;
+    @apply inline-flex items-center gap-2 px-6 py-3 font-body font-medium text-sm tracking-wide transition-colors duration-200 text-white rounded-none;
+    background-color: var(--color-primary);
+  }
+  .btn-primary:hover {
+    background-color: #c41f46;
+  }
+  .dark .btn-primary {
+    background-color: var(--color-primary-dk);
+  }
+  .dark .btn-primary:hover {
+    background-color: #de1f56;
   }
 
   .btn-ghost {
@@ -26,23 +66,70 @@
   }
 
   .btn-outline {
-    @apply inline-flex items-center gap-2 px-6 py-3 border border-stone-300 dark:border-stone-700 hover:border-stone-900 dark:hover:border-stone-300 text-stone-900 dark:text-stone-100 rounded-none font-body font-medium text-sm tracking-wide transition-colors duration-200;
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-none font-body font-medium text-sm tracking-wide transition-colors duration-200;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+  .btn-outline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+  .dark .btn-outline {
+    border-color: var(--color-border-dk);
+    color: var(--color-text-dk);
+  }
+  .dark .btn-outline:hover {
+    border-color: var(--color-primary-dk);
+    color: var(--color-primary-dk);
   }
 
   .input-field {
-    @apply w-full px-4 py-3 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 text-stone-900 dark:text-stone-100 placeholder-stone-400 dark:placeholder-stone-500 focus:outline-none focus:border-amber-700 dark:focus:border-amber-500 transition-colors duration-200 font-body text-sm;
+    @apply w-full px-4 py-3 font-body text-sm transition-colors duration-200;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+  .input-field::placeholder {
+    color: var(--color-muted);
+  }
+  .input-field:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+  .dark .input-field {
+    background-color: var(--color-surface-dk);
+    border-color: var(--color-border-dk);
+    color: var(--color-text-dk);
+  }
+  .dark .input-field::placeholder {
+    color: var(--color-muted-dk);
+  }
+  .dark .input-field:focus {
+    border-color: var(--color-primary-dk);
   }
 
   .label {
-    @apply block text-xs font-body font-medium tracking-widest uppercase text-stone-500 dark:text-stone-400 mb-2;
+    @apply block text-xs font-body font-medium tracking-widest uppercase mb-2;
+    color: var(--color-muted);
+  }
+  .dark .label {
+    color: var(--color-muted-dk);
   }
 
   .section-label {
-    @apply font-accent italic text-amber-700 dark:text-amber-500 text-lg mb-2;
+    @apply font-accent italic text-lg mb-2;
+    color: var(--color-primary);
+  }
+  .dark .section-label {
+    color: var(--color-primary-dk);
   }
 
   .section-title {
-    @apply font-display text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-50;
+    @apply font-display text-3xl md:text-4xl lg:text-5xl font-bold;
+    color: var(--color-text);
+  }
+  .dark .section-title {
+    color: var(--color-text-dk);
   }
 
   .card-img {
@@ -60,16 +147,14 @@
 
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fade-in, .slide-up {
-    animation: none;
-  }
+  .fade-in, .slide-up { animation: none; }
 }

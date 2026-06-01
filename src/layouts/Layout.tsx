@@ -1,9 +1,14 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  title?: string;
+}
+
+export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-stone-950">
+    <div className="flex flex-col min-h-screen" style={{ backgroundColor: 'var(--color-bg)', color: 'var(--color-text)' }}>
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />

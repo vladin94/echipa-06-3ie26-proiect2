@@ -8,16 +8,22 @@ import {
 } from '../types';
 
 const rawUrl = import.meta.env.VITE_STRAPI_URL as string | undefined;
+
 const API_BASE = rawUrl
-  ? rawUrl.replace(/\/admin\/?$/, '/api')
+  ? rawUrl.replace(/\/admin\/?$/, '').replace(/\/api\/?$/, '') + '/api'
   : 'http://localhost:1337/api';
+
+const TOKEN = import.meta.env.VITE_STRAPI_TOKEN as string | undefined;
 
 async function get<T>(path: string, params?: Record<string, string>): Promise<T> {
   const url = new URL(`${API_BASE}${path}`);
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
   }
-  const res = await fetch(url.toString());
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (TOKEN) headers['Authorization'] = `Bearer ${TOKEN}`;
+
+  const res = await fetch(url.toString(), { headers });
   if (!res.ok) {
     const text = await res.text().catch(() => res.statusText);
     throw new Error(`Strapi ${res.status}: ${text}`);
@@ -107,20 +113,19 @@ export const api = {
 
   searchCategories(query: string) {
     return get<StrapiListResponse<Category>>('/categories', {
-      'filters[title][$containsi]': query,
+      'filters[$or][0][name][$containsi]': query,
+      'filters[$or][1][title][$containsi]': query,
       'populate[cover]': '*',
       'pagination[pageSize]': '5',
     });
   },
 };
 
-export function getStrapiImageUrl(img?: { url?: string } | null, format?: 'thumbnail' | 'small' | 'medium' | 'large'): string {
+export function getStrapiImageUrl(img?: { url?: string } | null): string {
   if (!img?.url) return '';
-  const raw = rawUrl ? rawUrl.replace(/\/admin\/?$/, '') : 'http://localhost:1337';
-  const base = raw.replace(/\/api\/?$/, '');
-  if (format && (img as { formats?: Record<string, { url: string }> }).formats?.[format]?.url) {
-    const f = (img as { formats?: Record<string, { url: string }> }).formats![format]!;
-    return f.url.startsWith('http') ? f.url : `${base}${f.url}`;
-  }
-  return img.url.startsWith('http') ? img.url : `${base}${img.url}`;
+  if (img.url.startsWith('http')) return img.url;
+  const base = rawUrl
+    ? rawUrl.replace(/\/admin\/?$/, '').replace(/\/api\/?$/, '')
+    : 'http://localhost:1337';
+  return `${base}${img.url}`;
 }

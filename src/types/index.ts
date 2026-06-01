@@ -11,7 +11,7 @@ export interface StrapiImage {
   documentId?: string;
   name: string;
   alternativeText?: string;
-  caption?: string;
+  url: string;
   width: number;
   height: number;
   formats?: {
@@ -20,7 +20,6 @@ export interface StrapiImage {
     small?: StrapiImageFormat;
     thumbnail?: StrapiImageFormat;
   };
-  url: string;
   mime: string;
   size: number;
   provider: string;
@@ -31,13 +30,19 @@ export interface StrapiImage {
 export interface Category {
   id: number;
   documentId: string;
-  title: string;
+  // Strapi Cloud uses "name" by default for the category collection
+  name?: string;
+  title?: string;
   slug: string;
-  description: string;
+  description?: string | null;
   cover?: StrapiImage;
   articles?: Article[];
   createdAt: string;
   updatedAt: string;
+}
+
+export function getCategoryName(cat: Category): string {
+  return cat.title || cat.name || '';
 }
 
 export type ArticleLayout = 'editorial' | 'split' | 'gallery' | 'feature';
@@ -47,12 +52,12 @@ export interface Article {
   documentId: string;
   title: string;
   slug: string;
-  excerpt: string;
-  content: string;
+  excerpt?: string;
+  content?: string;
   cover?: StrapiImage;
   gallery?: StrapiImage[];
   category?: Category;
-  author: string;
+  author?: string;
   layoutVariant?: ArticleLayout;
   publishedAt: string;
   createdAt: string;

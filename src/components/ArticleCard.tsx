@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import { CalendarDays, User, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { CalendarDays, User } from 'lucide-react';
 import { Article } from '../types';
 import { getStrapiImageUrl } from '../lib/strapi-api';
+import { getCategoryName } from '../types';
 
 const ARTICLE_IMAGES: Record<string, string> = {
   'kinkakuji-golden-temple': 'https://images.pexels.com/photos/3408354/pexels-photo-3408354.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -13,18 +15,19 @@ const ARTICLE_IMAGES: Record<string, string> = {
 };
 const FALLBACK_IMG = 'https://images.pexels.com/photos/2187605/pexels-photo-2187605.jpeg?auto=compress&cs=tinysrgb&w=800';
 
-function formatDate(dateStr: string) {
-  if (!dateStr) return '';
-  return new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+function formatDate(d: string) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
-interface ArticleCardProps {
+interface Props {
   article: Article;
   variant?: 'default' | 'horizontal' | 'featured';
 }
 
-export default function ArticleCard({ article, variant = 'default' }: ArticleCardProps) {
+export default function ArticleCard({ article, variant = 'default' }: Props) {
   const imgUrl = getStrapiImageUrl(article.cover) || ARTICLE_IMAGES[article.slug] || FALLBACK_IMG;
+  const catName = article.category ? getCategoryName(article.category) : '';
 
   if (variant === 'horizontal') {
     return (
@@ -33,15 +36,15 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
           <img src={imgUrl} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
         <div className="flex-1 min-w-0">
-          {article.category && (
-            <span className="text-xs font-body font-medium tracking-widest uppercase text-amber-700 dark:text-amber-500">
-              {article.category.title}
+          {catName && (
+            <span className="text-xs font-body font-medium tracking-widest uppercase" style={{ color: 'var(--color-primary)' }}>
+              {catName}
             </span>
           )}
-          <h4 className="font-display text-base font-bold text-stone-900 dark:text-stone-100 mt-0.5 line-clamp-2 leading-snug group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors">
+          <h4 className="font-display text-base font-bold mt-0.5 line-clamp-2 leading-snug transition-colors" style={{ color: 'var(--color-text)' }}>
             {article.title}
           </h4>
-          <p className="text-xs text-stone-500 dark:text-stone-400 font-body mt-1">{formatDate(article.publishedAt)}</p>
+          <p className="text-xs font-body mt-1" style={{ color: 'var(--color-muted)' }}>{formatDate(article.publishedAt)}</p>
         </div>
       </Link>
     );
@@ -55,17 +58,19 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-          {article.category && (
-            <span className="inline-block font-body text-xs font-medium tracking-widest uppercase text-amber-400 mb-2">
-              {article.category.title}
+          {catName && (
+            <span className="inline-block font-body text-xs font-medium tracking-widest uppercase mb-2" style={{ color: '#fdacc4' }}>
+              {catName}
             </span>
           )}
           <h3 className="font-display text-2xl md:text-3xl font-bold text-white leading-tight mb-3">
             {article.title}
           </h3>
-          <p className="text-white/70 text-sm font-body line-clamp-2 leading-relaxed mb-4">{article.excerpt}</p>
+          {article.excerpt && (
+            <p className="text-white/70 text-sm font-body line-clamp-2 leading-relaxed mb-4">{article.excerpt}</p>
+          )}
           <div className="flex items-center gap-4 text-white/60 text-xs font-body">
-            <span className="flex items-center gap-1.5"><User size={12} /> {article.author}</span>
+            {article.author && <span className="flex items-center gap-1.5"><User size={12} /> {article.author}</span>}
             <span className="flex items-center gap-1.5"><CalendarDays size={12} /> {formatDate(article.publishedAt)}</span>
           </div>
         </div>
@@ -78,22 +83,24 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
       <div className="aspect-[4/3] overflow-hidden mb-4">
         <img src={imgUrl} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
       </div>
-      {article.category && (
-        <span className="text-xs font-body font-medium tracking-widest uppercase text-amber-700 dark:text-amber-500">
-          {article.category.title}
+      {catName && (
+        <span className="text-xs font-body font-medium tracking-widest uppercase" style={{ color: 'var(--color-primary)' }}>
+          {catName}
         </span>
       )}
-      <h3 className="font-display text-xl font-bold text-stone-900 dark:text-stone-100 mt-1.5 mb-2 leading-snug group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors line-clamp-2">
+      <h3 className="font-display text-xl font-bold mt-1.5 mb-2 leading-snug line-clamp-2 transition-colors" style={{ color: 'var(--color-text)' }}>
         {article.title}
       </h3>
-      <p className="text-stone-600 dark:text-stone-400 text-sm font-body line-clamp-3 leading-relaxed mb-3">
-        {article.excerpt}
-      </p>
-      <div className="flex items-center gap-4 text-stone-400 dark:text-stone-500 text-xs font-body">
-        <span className="flex items-center gap-1.5"><User size={12} /> {article.author}</span>
+      {article.excerpt && (
+        <p className="text-sm font-body line-clamp-3 leading-relaxed mb-3" style={{ color: 'var(--color-muted)' }}>
+          {article.excerpt}
+        </p>
+      )}
+      <div className="flex items-center gap-4 text-xs font-body" style={{ color: 'var(--color-muted)' }}>
+        {article.author && <span className="flex items-center gap-1.5"><User size={12} /> {article.author}</span>}
         <span className="flex items-center gap-1.5"><CalendarDays size={12} /> {formatDate(article.publishedAt)}</span>
       </div>
-      <span className="inline-flex items-center gap-1.5 text-amber-700 dark:text-amber-500 text-sm font-body font-medium mt-4 group-hover:gap-3 transition-all duration-300">
+      <span className="inline-flex items-center gap-1.5 text-sm font-body font-medium mt-4 group-hover:gap-3 transition-all duration-300" style={{ color: 'var(--color-primary)' }}>
         Read article <ArrowRight size={14} />
       </span>
     </Link>
