@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white dark:bg-stone-950 text-stone-900 dark:text-stone-50 font-body antialiased;
+  }
+}
+
+@layer components {
+  .container-max {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-amber-700 hover:bg-amber-800 dark:bg-amber-600 dark:hover:bg-amber-700 text-white rounded-none font-body font-medium text-sm tracking-wide transition-colors duration-200;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-6 py-3 border border-white/60 hover:border-white text-white hover:bg-white/10 rounded-none font-body font-medium text-sm tracking-wide transition-colors duration-200;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 border border-stone-300 dark:border-stone-700 hover:border-stone-900 dark:hover:border-stone-300 text-stone-900 dark:text-stone-100 rounded-none font-body font-medium text-sm tracking-wide transition-colors duration-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 text-stone-900 dark:text-stone-100 placeholder-stone-400 dark:placeholder-stone-500 focus:outline-none focus:border-amber-700 dark:focus:border-amber-500 transition-colors duration-200 font-body text-sm;
+  }
+
+  .label {
+    @apply block text-xs font-body font-medium tracking-widest uppercase text-stone-500 dark:text-stone-400 mb-2;
+  }
+
+  .section-label {
+    @apply font-accent italic text-amber-700 dark:text-amber-500 text-lg mb-2;
+  }
+
+  .section-title {
+    @apply font-display text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-50;
+  }
+
+  .card-img {
+    @apply w-full aspect-[4/3] object-cover;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .slide-up {
+    animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in, .slide-up {
+    animation: none;
+  }
+}
