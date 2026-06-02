@@ -135,7 +135,7 @@ export default function HomePage() {
       {/* Quote section */}
       <section className="relative py-32 overflow-hidden">
         <img
-          src="https://images.pexels.com/photos/3490363/pexels-photo-3490363.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="https://images.pexels.com/photos/27109409/pexels-photo-27109409.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Kyoto garden"
           className="absolute inset-0 w-full h-full object-cover"
         />

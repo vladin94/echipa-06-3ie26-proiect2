@@ -5,9 +5,9 @@ import { getStrapiImageUrl } from '../lib/strapi-api';
 
 const CATEGORY_IMAGES: Record<string, string> = {
   'temples-shrines': 'https://images.pexels.com/photos/2187605/pexels-photo-2187605.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'gastronomy': 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'gardens-nature': 'https://images.pexels.com/photos/3490363/pexels-photo-3490363.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'arts-crafts': 'https://images.pexels.com/photos/5060281/pexels-photo-5060281.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'gastronomy': 'https://images.pexels.com/photos/30856693/pexels-photo-30856693.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'gardens-nature': 'https://images.pexels.com/photos/27109409/pexels-photo-27109409.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'arts-crafts': 'https://images.pexels.com/photos/20693087/pexels-photo-20693087.jpeg?auto=compress&cs=tinysrgb&w=800',
   'neighborhoods': 'https://images.pexels.com/photos/402028/pexels-photo-402028.jpeg?auto=compress&cs=tinysrgb&w=800',
   'seasons-festivals': 'https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800',
   'news': 'https://images.pexels.com/photos/3408354/pexels-photo-3408354.jpeg?auto=compress&cs=tinysrgb&w=800',

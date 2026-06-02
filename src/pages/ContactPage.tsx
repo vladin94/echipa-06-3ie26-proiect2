@@ -52,7 +52,7 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="relative py-28 md:py-40 overflow-hidden" style={{ backgroundColor: '#1a0d11' }}>
         <img
-          src="https://images.pexels.com/photos/5060281/pexels-photo-5060281.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="https://images.pexels.com/photos/20693087/pexels-photo-20693087.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Kyoto"
           className="absolute inset-0 w-full h-full object-cover opacity-30"
         />
