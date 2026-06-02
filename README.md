@@ -217,3 +217,17 @@ npm run build
 ## License
 
 University project — for academic demonstration purposes.
+
+---
+
+## Responsabilitățile echipei
+
+Activitățile din cadrul proiectului au fost împărțite în mod echilibrat între membrii echipei, fiecare fiind responsabil de o zonă principală de dezvoltare și documentare:
+
+| Membru | Rol | Responsabilități |
+|---|---|---|
+| **Vlad** | Lider de echipă | Coordonarea proiectului, organizarea repository-ului, integrarea finală, redactarea secțiunilor generale din README, prezentarea scopului proiectului, a tehnologiilor folosite și verificarea finală a documentației |
+| **Alex** | Frontend & configurare locală | Redactarea secțiunilor despre rularea locală, variabilele de mediu, structura proiectului și verificarea pașilor de instalare, dezvoltare și build |
+| **Robert** | Strapi & integrare CMS | Redactarea secțiunilor despre integrarea cu Strapi, tipurile de conținut, permisiunile API și verificarea coerenței dintre README și structura CMS-ului |
+| **Ariana** | Deploy & livrare | Redactarea secțiunilor despre build, publicarea pe Netlify, deploy manual, verificările finale pentru livrare și secțiunea de licență |
+
